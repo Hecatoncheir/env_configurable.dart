@@ -16,7 +16,7 @@ Generate class with properties from environment variables.
 dependencies:
   env_annotation: 
     git: 
-      url: https://github.com/Hecatoncheir/env_annotation.dart.git
+      url: https://github.com/Hecatoncheir/env_configurable.dart.git
       path: env_annotation
 
 dev_dependencies:

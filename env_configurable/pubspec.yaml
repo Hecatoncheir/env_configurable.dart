@@ -11,8 +11,10 @@ dependencies:
   build: ^2.0.3
   source_gen: ^1.0.3
 
-  env_annotation:
-    git: https://github.com/Hecatoncheir/env_annotation.git
+  env_annotation: 
+    git: 
+      url: https://github.com/Hecatoncheir/env_annotation.dart.git
+      path: env_annotation
 
 dev_dependencies:
   test: ^1.17.10
