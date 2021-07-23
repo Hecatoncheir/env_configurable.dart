@@ -1,7 +1,7 @@
 Generate class with properties from environment variables.
 
 
-## enc_annotation
+## env_annotation
 [Source code](https://github.com/Hecatoncheir/env_configurable.dart/tree/master/env_annotation)
 
 
