@@ -1,0 +1,39 @@
+import 'package:env_annotation/env_annotation.dart';
+
+part 'example.g.dart';
+
+@EnvConfigurable()
+class Person {
+  @EnvKey(defaultValue: 'Test name')
+  final String firstName;
+
+  @EnvKey(environmentKey: 'SecondName')
+  final String? secondName;
+
+  int age;
+
+  bool isOk;
+
+  Version version;
+
+  Person({
+    required this.firstName,
+    required this.secondName,
+    required this.age,
+    required this.isOk,
+    required this.version,
+  });
+
+  factory Person.fromEnvironment() => _$PersonFromEnvironment();
+}
+
+@EnvConfigurable()
+class Version {
+  final String number;
+
+  Version({
+    required this.number,
+  });
+
+  factory Version.fromEnvironment() => _$VersionFromEnvironment();
+}

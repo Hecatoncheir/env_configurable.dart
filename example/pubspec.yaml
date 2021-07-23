@@ -1,0 +1,28 @@
+name: example
+description: .
+version: 0.0.1
+
+publish_to: none
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  build: ^2.0.3
+  source_gen: ^1.0.3
+
+  env_annotation:
+    git:
+      url: https://github.com/Hecatoncheir/env_annotation.dart.git
+      path: env_annotation
+
+dev_dependencies:
+  test: ^1.17.10
+  build_test: ^2.1.2
+  build_runner: ^2.0.6
+  dart_code_metrics: ^4.0.1
+
+  env_configurable:
+    git:
+      url: https://github.com/Hecatoncheir/env_configurable.dart.git
+      path: env_configurable

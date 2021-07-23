@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      env_configurable:
+        enabled: true
+
+builders:
+  env_configurable:
+    import: "package:env_configurable/builder.dart"
+    builder_factories: ["envBuilder"]
+    build_extensions: {".dart": ["env_configurable.g.dart"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
