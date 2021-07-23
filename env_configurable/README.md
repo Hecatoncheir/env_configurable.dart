@@ -1,8 +1,12 @@
-# env_configurable
-
 Generate class with properties from environment variables.
 
-[env_annotation](https://github.com/Hecatoncheir/env_annotation)
+
+## enc_annotation
+[Source code](https://github.com/Hecatoncheir/env_configurable.dart/tree/master/env_annotation)
+
+
+## env_configurable
+[Source code](https://github.com/Hecatoncheir/env_configurable.dart/tree/master/env_configurable)
 
 ## Setup
 
@@ -11,12 +15,16 @@ Generate class with properties from environment variables.
 ```yaml
 dependencies:
   env_annotation: 
-    git: https://github.com/Hecatoncheir/env_annotation.git
+    git: 
+      url: https://github.com/Hecatoncheir/env_configurable.dart.git
+      path: env_annotation
 
 dev_dependencies:
   build_runner: ^2.0.0
   env_configurable:
-    git: https://github.com/Hecatoncheir/env_configurable.git
+    git: 
+      url: https://github.com/Hecatoncheir/env_configurable.dart.git
+      path: env_configurable
 ```
 
 Run `dart run build_runner build`:
