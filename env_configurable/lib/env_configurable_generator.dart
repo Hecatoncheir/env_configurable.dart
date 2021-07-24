@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:meta/meta.dart';
 
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
@@ -20,17 +21,61 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
       );
     }
 
-    final elementInstanceFields = Map.fromEntries(classElement.fields
-        .where((e) => !e.isStatic)
-        .map((e) => MapEntry(e.name, e)));
+    final classStructure = prepareClassStructure(classElement);
 
-    final classStructure = {};
+    final fromEnvironmentFunction =
+        generateFromEnvironmentFunction(classStructure);
+
+    return fromEnvironmentFunction;
+  }
+
+  /// prepareStructure - create map like:
+  /// {
+  //    "Class":"class Person",
+  //    "ClassName":"Person",
+  //    "ClassFields":[
+  //       {
+  //          "Field":"String firstName",
+  //          "FieldType":"String",
+  //          "FieldName":"firstName",
+  //          "defaultValue":"Test name"
+  //       },
+  //       {
+  //          "Field":"String?
+  //          "FieldType":"String?",
+  //          "FieldName":"secondName",
+  //          "environmentKey":"SecondName"
+  //       },
+  //       {
+  //          "Field":"int age",
+  //          "FieldType":"int",
+  //          "FieldName":"age"
+  //       },
+  //       {
+  //          "Field":"bool isOk",
+  //          "FieldType":"bool",
+  //          "FieldName":"isOk"
+  //       },
+  //       {
+  //          "Field":"Version version",
+  //          "FieldType":"Version",
+  //          "FieldName":"version"
+  //       }
+  //    ]
+  // }
+  @visibleForTesting
+  Map<String, dynamic> prepareClassStructure(ClassElement classElement) {
+    final classStructure = <String, dynamic>{};
     classStructure['Class'] = classElement;
 
     final className = classElement.displayName;
     classStructure['ClassName'] = className;
 
     classStructure['ClassFields'] = [];
+
+    final elementInstanceFields = Map.fromEntries(classElement.fields
+        .where((e) => !e.isStatic)
+        .map((e) => MapEntry(e.name, e)));
 
     for (final fieldElement in elementInstanceFields.entries) {
       final classFieldStructure = {};
@@ -65,12 +110,11 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
       classStructure['ClassFields'].add(classFieldStructure);
     }
 
-    final fromEnvironmentFunction =
-        generateFromEnvironmentFunction(classStructure);
-
-    return fromEnvironmentFunction;
+    return classStructure;
   }
 
+  /// isSupportType - check if type of field support for parse.
+  @visibleForTesting
   bool isSupportType(String type) {
     const supportedTypes = [
       'String?',
@@ -86,6 +130,12 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
     return true;
   }
 
+  /// parseFieldValueGenerator - get right value for class field;
+  /// If it required and no value find:
+  /// bool - false by default,
+  /// int - 0 by default,
+  /// String - '' empty by default.
+  @visibleForTesting
   Object? parseFieldValueGenerator(String type, String? value) {
     Object? _value = null;
 
@@ -124,6 +174,21 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
     return _value;
   }
 
+  /// generateFromEnvironmentFunction - make function:
+  /// ${ClassName} _${ClassName}FromEnvironment()
+  /// Example:
+  /// Person _$PersonFromEnvironment() {
+  //   final personInstance = Person(
+  //     firstName: "Test name",
+  //     secondName: null,
+  //     age: 0,
+  //     isOk: false,
+  //     version: Version.fromEnvironment(),
+  //   );
+  //
+  //   return personInstance;
+  // }
+  @visibleForTesting
   String generateFromEnvironmentFunction(Map classStructure) {
     // Begin.
     final buf = StringBuffer();
