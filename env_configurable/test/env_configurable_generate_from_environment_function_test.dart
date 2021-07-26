@@ -8,6 +8,7 @@ void main() {
     setUpAll(() {
       generator = EnvConfigurableGenerator();
     });
+
     test('can check support type', () {
       final isSupportString = generator.isSupportType('String');
       expect(isSupportString, isTrue);
@@ -161,7 +162,7 @@ return personInstance;
 }
 ''';
 
-      expect(expectedCreatedFunction, equals(expectedCreatedFunction));
+      expect(createdFunction, equals(expectedCreatedFunction));
     });
 
     test('can prepare class structure', () {});

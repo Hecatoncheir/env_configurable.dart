@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
 
+import 'package:recase/recase.dart';
+
 import 'package:analyzer/dart/element/element.dart';
 import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
@@ -124,7 +126,7 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
       'int?',
       'int',
       'double',
-      'double!'
+      'double!',
     ];
 
     if (!supportedTypes.contains(type)) return false;
@@ -204,7 +206,7 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
     // Begin.
     final buf = StringBuffer();
 
-    final className = classStructure['ClassName'];
+    final String className = classStructure['ClassName'];
     buf.writeln("$className _\$${className}FromEnvironment(){");
 
     final classFields = classStructure['ClassFields'];
@@ -214,7 +216,7 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
     // Create class:
 
     buf.writeln(
-      'final ${className.toString().toLowerCase()}Instance = $className(',
+      'final ${ReCase(className).camelCase}Instance = $className(',
     );
 
     final environments = Platform.environment;
