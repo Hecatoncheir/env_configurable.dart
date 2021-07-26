@@ -116,8 +116,8 @@ void main() {
 
     test('can generate "FromEnvironmentFunction"', () {
       final classStructure = {
-        "Class": "class Person",
-        "ClassName": "Person",
+        "Class": "class PersonTestClass",
+        "ClassName": "PersonTestClass",
         "ClassFields": [
           {
             "Field": "String firstName",
@@ -150,15 +150,15 @@ void main() {
       expect(createdFunction, isNotEmpty);
 
       final expectedCreatedFunction = '''
-Person _\$PersonFromEnvironment(){
-final personInstance = Person(
+PersonTestClass _\$PersonTestClassFromEnvironment(){
+final personTestClassInstance = PersonTestClass(
 firstName: "Test name",
 secondName: null,
 age: 0,
 isOk: false,
 );
 
-return personInstance;
+return personTestClassInstance;
 }
 ''';
 

@@ -259,7 +259,7 @@ class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
 
     buf.writeln();
 
-    buf.writeln('return ${className.toString().toLowerCase()}Instance;');
+    buf.writeln('return ${ReCase(className).camelCase}Instance;');
 
     // End.
     buf.writeln("}");
