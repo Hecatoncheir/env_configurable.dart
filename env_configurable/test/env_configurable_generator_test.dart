@@ -1,9 +1,7 @@
-import 'package:test/test.dart';
-
 import 'package:build_test/build_test.dart';
-import 'package:source_gen/source_gen.dart';
-
 import 'package:env_configurable/env_configurable_generator.dart';
+import 'package:source_gen/source_gen.dart';
+import 'package:test/test.dart';
 
 void main() {
   group('Generator', () {

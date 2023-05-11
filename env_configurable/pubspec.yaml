@@ -1,16 +1,16 @@
 name: env_configurable
 description: Generate class with properties from environment variables..
-version: 0.1.1
+version: 1.0.0
 
 publish_to: "none"
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
-  build: ^2.0.3
-  source_gen: ^1.0.3
-  recase: ^4.0.0
+  build: ^2.4.0
+  source_gen: ^1.3.1
+  recase: ^4.1.0
 
   env_annotation:
     git:
@@ -18,7 +18,7 @@ dependencies:
       path: env_annotation
 
 dev_dependencies:
-  test: ^1.17.10
-  build_test: ^2.1.2
-  build_runner: ^2.0.6
-  dart_code_metrics: ^4.0.1
+  test: ^1.24.2
+  build_test: ^2.1.7
+  build_runner: ^2.4.2
+  dart_code_metrics: ^5.7.3
