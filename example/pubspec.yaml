@@ -26,3 +26,7 @@ dev_dependencies:
     git:
       url: https://github.com/Hecatoncheir/env_configurable.dart.git
       path: env_configurable
+
+dependency_overrides:
+  graphs: 2.2.0
+  vm_service: 11.5.0
