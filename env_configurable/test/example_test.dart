@@ -10,6 +10,7 @@ void main() {
       expect(person.secondName, isNull);
       expect(person.age, equals(0));
       expect(person.version.number, equals('0.0.0'));
+      expect(person.version.minorNumber, equals(''));
     });
   });
 }

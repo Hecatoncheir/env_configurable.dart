@@ -29,10 +29,14 @@ class Person {
 
 @EnvConfigurable()
 class Version {
+  @EnvKey(defaultValue: '0.0.0')
   final String number;
+
+  final String minorNumber;
 
   Version({
     required this.number,
+    required this.minorNumber,
   });
 
   factory Version.fromEnvironment() => _$VersionFromEnvironment();

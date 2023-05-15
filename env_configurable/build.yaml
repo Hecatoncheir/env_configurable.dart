@@ -7,8 +7,8 @@ targets:
 builders:
   env_configurable:
     import: "package:env_configurable/builder.dart"
-    builder_factories: ["envBuilder"]
-    build_extensions: {".dart": ["env_configurable.g.dart"]}
+    builder_factories: ["envConfigurable"]
+    build_extensions: {".dart": ["env_configurable.g.part"]}
     auto_apply: dependents
     build_to: cache
-    applies_builders: ["source_gen|combining_builder"]
+    applies_builders: ["source_gen:combining_builder"]

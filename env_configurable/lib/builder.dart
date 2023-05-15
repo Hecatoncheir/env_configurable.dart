@@ -1,11 +1,11 @@
 library env_configurable_builder;
 
 import 'package:build/build.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:source_gen/source_gen.dart' hide Generator;
 
-import 'env_configurable_generator.dart';
+import 'generator.dart';
 
-Builder envBuilder(BuilderOptions _) => SharedPartBuilder(
-      [EnvConfigurableGenerator()],
+Builder envConfigurable(BuilderOptions _) => SharedPartBuilder(
+      [Generator()],
       'env_configurable',
     );

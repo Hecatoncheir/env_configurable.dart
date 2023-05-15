@@ -5,11 +5,11 @@ version: 0.0.1
 publish_to: none
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: ">=3.0.0 <4.0.0"
 
 dependencies:
   build: ^2.4.0
-  source_gen: ^1.3.1
+  source_gen: ^1.3.2
 
   env_annotation:
     git:
@@ -28,5 +28,7 @@ dev_dependencies:
       path: env_configurable
 
 dependency_overrides:
-  graphs: 2.2.0
-  vm_service: 11.5.0
+  env_annotation:
+    path: ../env_annotation
+  env_configurable:
+    path: ../env_configurable

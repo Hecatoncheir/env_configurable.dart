@@ -3,7 +3,7 @@
 part of 'example.dart';
 
 // **************************************************************************
-// EnvConfigurableGenerator
+// Generator
 // **************************************************************************
 
 Person _$PersonFromEnvironment() {
@@ -20,7 +20,8 @@ Person _$PersonFromEnvironment() {
 
 Version _$VersionFromEnvironment() {
   final versionInstance = Version(
-    number: "",
+    number: "0.0.0",
+    minorNumber: "",
   );
 
   return versionInstance;

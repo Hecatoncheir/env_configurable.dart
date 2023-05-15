@@ -1,6 +1,6 @@
 import 'package:build_test/build_test.dart';
-import 'package:env_configurable/env_configurable_generator.dart';
-import 'package:source_gen/source_gen.dart';
+import 'package:env_configurable/generator.dart';
+import 'package:source_gen/source_gen.dart' hide Generator;
 import 'package:test/test.dart';
 
 void main() {
@@ -9,7 +9,7 @@ void main() {
       'EnvConfigurableGenerator',
       () async {
         final builder = SharedPartBuilder(
-          [EnvConfigurableGenerator()],
+          [Generator()],
           'env_configurable',
         );
 
