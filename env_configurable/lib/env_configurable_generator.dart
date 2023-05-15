@@ -6,7 +6,7 @@ import 'package:source_gen/source_gen.dart';
 import 'class_structure.dart';
 import 'generate_from_environment.dart';
 
-class Generator extends GeneratorForAnnotation<EnvConfigurable> {
+class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
   @override
   Future<String> generateForAnnotatedElement(
     Element classElement,
