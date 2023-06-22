@@ -14,6 +14,7 @@ dependencies:
     git:
       url: https://github.com/Hecatoncheir/env_configurable.dart.git
       path: env_annotation
+      ref: 2.0.0
 
 dev_dependencies:
   build: ^2.4.0
