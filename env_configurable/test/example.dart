@@ -1,3 +1,5 @@
+// dart run build_runner build
+
 import 'package:env_annotation/env_annotation.dart';
 
 part 'example.g.dart';

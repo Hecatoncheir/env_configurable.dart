@@ -1,4 +1,4 @@
-import 'package:analyzer/dart/element/element.dart';
+import 'package:analyzer/dart/element/element2.dart';
 import 'package:env_annotation/env_annotation.dart';
 import 'package:source_gen/source_gen.dart';
 
@@ -13,12 +13,12 @@ final class ClassStructure {
     required this.fields,
   });
 
-  ClassStructure.fromClassElement(ClassElement classElement)
-      : name = classElement.name,
+  ClassStructure.fromClassElement(ClassElement2 classElement)
+      : name = classElement.displayName,
         fields = <ClassField>[] {
-    final elementInstanceFields = Map.fromEntries(classElement.fields
+    final elementInstanceFields = Map.fromEntries(classElement.fields2
         .where((e) => !e.isStatic)
-        .map((e) => MapEntry(e.name, e)));
+        .map((e) => MapEntry(e.displayName, e)));
 
     for (final fieldElement in elementInstanceFields.entries) {
       final field = fieldElement.value;
@@ -37,8 +37,9 @@ final class ClassStructure {
         if (!_defaultValue.isNull) defaultValue = _defaultValue.stringValue;
 
         final _environmentKey = reader.read('environmentKey');
-        if (!_environmentKey.isNull)
+        if (!_environmentKey.isNull) {
           environmentKey = _environmentKey.stringValue;
+        }
       }
 
       final classField = ClassField(
