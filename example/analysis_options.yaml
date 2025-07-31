@@ -1,0 +1,40 @@
+# https://dart.dev/guides/language/analysis-options
+analyzer:
+  errors:
+    invalid_annotation_target: ignore
+  exclude: [packages, build/**, lib/**.freezed.dart, lib/**.g.dart]
+  plugins:
+    - dart_code_linter
+  cannot-ignore:
+    - error
+    - unused_import
+
+linter:
+  rules:
+    - camel_case_types
+    - empty_constructor_bodies
+    - use_super_parameters
+    - cancel_subscriptions
+    - close_sinks
+    - curly_braces_in_flow_control_structures
+
+dart_code_linter:
+  metrics:
+    cyclomatic-complexity: 20
+    number-of-parameters: 4
+    maximum-nesting-level: 5
+  rules:
+    - avoid-dynamic
+    - avoid-passing-async-when-sync-expected
+    - avoid-redundant-async
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-unrelated-type-assertions
+    - avoid-unused-parameters
+    - no-boolean-literal-compare
+    - no-empty-block
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - no-equal-then-else
+    - prefer-moving-to-variable
+    - prefer-match-file-name
