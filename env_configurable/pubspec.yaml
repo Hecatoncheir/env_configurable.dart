@@ -1,6 +1,6 @@
 name: env_configurable
 description: Generate class with properties from environment variables..
-version: 3.1.0
+version: 3.1.1
 
 publish_to: "none"
 
@@ -17,7 +17,7 @@ dependencies:
     git:
       url: https://github.com/Hecatoncheir/env_configurable.dart.git
       path: env_annotation
-      ref: 3.0.0
+      ref: 3.1.1
 
 dev_dependencies:
   build_test: ^3.4.0
