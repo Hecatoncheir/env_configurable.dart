@@ -1,6 +1,6 @@
 name: env_annotation
 description: Annotations used by env_configurable.
-version: 3.0.0
+version: 3.1.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
