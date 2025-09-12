@@ -1,5 +1,7 @@
 // dart run build_runner build
 
+// ignore_for_file: prefer-match-file-name
+
 import 'package:env_annotation/env_annotation.dart';
 
 part 'example.g.dart';
