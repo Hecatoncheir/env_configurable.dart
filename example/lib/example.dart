@@ -36,9 +36,7 @@ class Version {
   @EnvKey(defaultValue: '0.0.0')
   final String number;
 
-  Version({
-    required this.number,
-  });
+  Version({required this.number});
 
   factory Version.fromEnvironment() => _$VersionFromEnvironment();
 }
