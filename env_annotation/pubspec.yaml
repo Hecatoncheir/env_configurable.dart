@@ -1,10 +1,10 @@
 name: env_annotation
 description: Annotations used by env_configurable.
-version: 3.1.1
+version: 3.2.0
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
 
 dev_dependencies:
-  dart_code_linter: ^3.1.1
-  test: ^1.24.2
+  dart_code_linter: ^3.2.1
+  test: ^1.29.0
