@@ -14,10 +14,10 @@ dependencies:
 
 dev_dependencies:
   analyzer: 10.0.1
-  dart_code_linter: ^3.2.1
-  test: ^1.29.0
-  build_runner: ^2.10.5
-  build_test: ^3.5.5
+  dart_code_linter: any
+  test: any
+  build_runner: any
+  build_test: any
 
   env_configurable:
     git:
@@ -25,7 +25,6 @@ dev_dependencies:
       path: env_configurable
 
 dependency_overrides:
-  analyzer: 10.0.1
   env_annotation:
     path: ../env_annotation
   env_configurable:
