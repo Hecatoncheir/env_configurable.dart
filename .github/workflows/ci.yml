@@ -1,0 +1,58 @@
+name: Проверки Dart
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_call:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  packages:
+    name: Проверка ${{ matrix.package }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [env_annotation, env_configurable]
+    defaults:
+      run:
+        working-directory: ${{ matrix.package }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.5'
+      - name: Загрузить зависимости
+        run: dart pub get
+      - name: Проверить форматирование
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Статический анализ
+        run: dart analyze --fatal-infos
+      - name: Тесты
+        run: dart test
+
+  example:
+    name: Генерация примера
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: example
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: '3.13.5'
+      - name: Загрузить зависимости
+        run: dart pub get
+      - name: Проверить форматирование исходников
+        run: dart format --output=none --set-exit-if-changed lib/example.dart
+      - name: Сгенерировать конфигурацию
+        run: dart run build_runner build
+      - name: Статический анализ
+        run: dart analyze --fatal-infos

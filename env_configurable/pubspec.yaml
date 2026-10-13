@@ -1,6 +1,6 @@
 name: env_configurable
 description: Generates environment-backed configuration classes.
-version: 3.3.3
+version: 3.4.0
 publish_to: none
 
 environment:

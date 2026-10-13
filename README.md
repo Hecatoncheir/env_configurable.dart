@@ -115,3 +115,21 @@ dart analyze --fatal-infos
 ## Лицензия
 
 [MIT](LICENSE).
+
+## История изменений и релизы
+
+Изменения описаны в [CHANGELOG.md](CHANGELOG.md). Архивы пакетов доступны в [GitHub Releases](https://github.com/Hecatoncheir/env_configurable.dart/releases).
+
+CI проверяет оба пакета и генерацию примера на Dart 3.13.5. Для выпуска следующей версии:
+
+1. Обновите `version` в `env_annotation/pubspec.yaml` и `env_configurable/pubspec.yaml`.
+2. Добавьте раздел версии в общий CHANGELOG и обновите журналы пакетов.
+3. Проверьте заметки: `python3 tool/release_notes.py 3.4.0 /tmp/release-notes.md`, подставив новую версию.
+4. Отправьте коммит в `master`, затем создайте и отправьте тег этой версии:
+
+```sh
+git tag -a 3.4.0 -m 'Релиз 3.4.0'
+git push origin 3.4.0
+```
+
+Workflow выпуска повторяет проверки и создаёт GitHub Release с заметками, архивами исходников двух пакетов и контрольными суммами SHA-256. Версии пакетов должны совпадать с тегом; теги с префиксом `v` также поддерживаются. Публикация на pub.dev в этот процесс не входит. Если workflow завершился с ошибкой, исправьте причину и повторите запуск через GitHub Actions.

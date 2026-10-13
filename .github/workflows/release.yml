@@ -1,0 +1,52 @@
+name: Выпуск релиза
+
+on:
+  push:
+    tags: ['[0-9]*.[0-9]*.[0-9]*', 'v[0-9]*.[0-9]*.[0-9]*']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  checks:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    name: Подготовить и опубликовать GitHub Release
+    needs: checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Проверить версии и подготовить заметки
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: python3 tool/release_notes.py "$RELEASE_TAG" release-notes.md
+      - name: Подготовить архивы пакетов
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          for package in env_annotation env_configurable; do
+            git archive --format=tar.gz --prefix="$package/" --output="dist/$package-$RELEASE_TAG.tar.gz" "HEAD:$package"
+          done
+          cd dist
+          sha256sum ./*.tar.gz > SHA256SUMS
+      - name: Опубликовать релиз и архивы
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$RELEASE_TAG" > /dev/null 2>&1; then
+            gh release upload "$RELEASE_TAG" dist/* --clobber
+            gh release edit "$RELEASE_TAG" --notes-file release-notes.md
+          else
+            gh release create "$RELEASE_TAG" dist/* --verify-tag --title "$RELEASE_TAG" --notes-file release-notes.md
+          fi
