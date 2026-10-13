@@ -19,9 +19,7 @@ Person _$PersonFromEnvironment() {
 }
 
 Version _$VersionFromEnvironment() {
-  final versionInstance = Version(
-    number: "0.0.0",
-  );
+  final versionInstance = Version(number: "0.0.0");
 
   return versionInstance;
 }

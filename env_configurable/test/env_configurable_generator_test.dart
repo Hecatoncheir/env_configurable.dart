@@ -5,19 +5,19 @@ import 'package:test/test.dart';
 
 void main() {
   group('Generator', () {
-    test(
-      'EnvConfigurableGenerator',
-      () async {
-        final builder = SharedPartBuilder(
-          [EnvConfigurableGenerator()],
-          'env_configurable',
-        );
+    // `testBuilder` разбирает исходник анализатором, и в чистом окружении —
+    // в свежем контейнере CI — сначала собирает сводку SDK. В образе CI под
+    // эмуляцией тридцати секунд на это не хватило.
+    test('EnvConfigurableGenerator', () async {
+      final builder = SharedPartBuilder([
+        EnvConfigurableGenerator(),
+      ], 'env_configurable');
 
-        const sourceAssets = {
-          'a|lib/example.dart': '''
+      const sourceAssets = {
+        'env_configurable|test/example.dart': '''
         import 'package:env_annotation/env_annotation.dart';
         
-        part 'env_configurable.g.dart';
+        part 'example.g.dart';
         
         @EnvConfigurable()
         class Person {
@@ -35,31 +35,29 @@ void main() {
           });
         }
         ''',
-        };
+      };
 
-        final outputs = {
-          'a|lib/example.g.dart': r'''
-            // GENERATED CODE - DO NOT MODIFY BY HAND
+      final outputs = {
+        'env_configurable|test/example.env_configurable.g.part': decodedMatches(
+          allOf(
+            contains(r'Person _$PersonFromEnvironment()'),
+            contains('firstName: "Test name"'),
+            contains('secondName: null'),
+            contains('age: 0'),
+          ),
+        ),
+      };
 
-            part of 'example.dart';
+      final readerWriter = TestReaderWriter(rootPackage: 'env_configurable');
+      await readerWriter.testing.loadIsolateSources();
 
-            // **************************************************************************
-            // EnvConfigurableGenerator
-            // **************************************************************************
-
-            // !
-            ''',
-        };
-
-        await testBuilder(
-          builder,
-          sourceAssets,
-          // reader: await PackageAssetReader.currentIsolate(),
-          outputs: outputs,
-        );
-      },
-      timeout: Timeout(Duration(days: 1)),
-      skip: 'Untestable',
-    );
+      await testBuilder(
+        builder,
+        sourceAssets,
+        rootPackage: 'env_configurable',
+        readerWriter: readerWriter,
+        outputs: outputs,
+      );
+    }, timeout: const Timeout(Duration(minutes: 2)));
   });
 }

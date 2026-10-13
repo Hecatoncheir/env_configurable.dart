@@ -8,20 +8,21 @@ import 'generate_from_environment.dart';
 class EnvConfigurableGenerator extends GeneratorForAnnotation<EnvConfigurable> {
   @override
   Future<String> generateForAnnotatedElement(
-    Element classElement,
+    Element element,
     ConstantReader annotation,
     buildStep,
   ) async {
-    if (classElement is! ClassElement) {
+    if (element is! ClassElement) {
       throw InvalidGenerationSourceError(
         '`@EnvConfigurable` can only be used on classes.',
-        element: classElement,
+        element: element,
       );
     }
 
-    final classStructure = ClassStructure.fromClassElement(classElement);
-    final fromEnvironmentClassStructure =
-        generateFromEnvironmentClassStructure(classStructure);
+    final classStructure = ClassStructure.fromClassElement(element);
+    final fromEnvironmentClassStructure = generateFromEnvironmentClassStructure(
+      classStructure,
+    );
 
     return fromEnvironmentClassStructure;
   }

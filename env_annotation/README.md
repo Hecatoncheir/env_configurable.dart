@@ -1,3 +1,3 @@
 # env_annotation
 
-Defines the annotations used by [env_configurable](https://github.com/Hecatoncheir/env_configurable).
+Аннотации для генератора [env_configurable](../env_configurable). Требуется Dart 3.12 или новее.

@@ -28,16 +28,22 @@ void main() {
       final stringRequiredFieldWithoutValue = parseFieldValue('String', null);
       expect(stringRequiredFieldWithoutValue, equals(''));
 
-      final stringRequiredFieldWithValue =
-          parseFieldValue('String', 'Some test string');
+      final stringRequiredFieldWithValue = parseFieldValue(
+        'String',
+        'Some test string',
+      );
       expect(stringRequiredFieldWithValue, equals('Some test string'));
 
-      final stringNotRequiredFieldWithoutValue =
-          parseFieldValue('String?', null);
+      final stringNotRequiredFieldWithoutValue = parseFieldValue(
+        'String?',
+        null,
+      );
       expect(stringNotRequiredFieldWithoutValue, isNull);
 
-      final stringNotRequiredFieldWithValue =
-          parseFieldValue('String?', 'Some test string');
+      final stringNotRequiredFieldWithValue = parseFieldValue(
+        'String?',
+        'Some test string',
+      );
       expect(stringNotRequiredFieldWithValue, equals('Some test string'));
     });
 
@@ -68,8 +74,10 @@ void main() {
       final doubleRequiredFieldWithValue = parseFieldValue('double', '0.1');
       expect(doubleRequiredFieldWithValue, equals(0.1));
 
-      final doubleNotRequiredFieldWithoutValue =
-          parseFieldValue('double?', null);
+      final doubleNotRequiredFieldWithoutValue = parseFieldValue(
+        'double?',
+        null,
+      );
       expect(doubleNotRequiredFieldWithoutValue, isNull);
 
       final doubleNotRequiredFieldWithValue = parseFieldValue('double?', '2');
@@ -104,19 +112,14 @@ void main() {
             name: "secondName",
             environmentKey: "SecondName",
           ),
-          ClassField(
-            type: "int",
-            name: "age",
-          ),
-          ClassField(
-            type: "bool",
-            name: "isOk",
-          ),
+          ClassField(type: "int", name: "age"),
+          ClassField(type: "bool", name: "isOk"),
         ],
       );
 
-      final createdFunction =
-          generateFromEnvironmentClassStructure(classStructure);
+      final createdFunction = generateFromEnvironmentClassStructure(
+        classStructure,
+      );
 
       expect(createdFunction, isNotEmpty);
 

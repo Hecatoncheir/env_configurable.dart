@@ -38,10 +38,7 @@ class Version {
 
   final String minorNumber;
 
-  Version({
-    required this.number,
-    required this.minorNumber,
-  });
+  Version({required this.number, required this.minorNumber});
 
   factory Version.fromEnvironment() => _$VersionFromEnvironment();
 }

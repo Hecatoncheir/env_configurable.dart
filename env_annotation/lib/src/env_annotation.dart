@@ -8,8 +8,5 @@ class EnvKey {
   final Object? environmentKey;
   final Object? defaultValue;
 
-  const EnvKey({
-    this.environmentKey,
-    this.defaultValue,
-  });
+  const EnvKey({this.environmentKey, this.defaultValue});
 }

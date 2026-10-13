@@ -8,17 +8,16 @@ final class ClassStructure {
   final String name;
   final List<ClassField> fields;
 
-  ClassStructure({
-    required this.name,
-    required this.fields,
-  });
+  ClassStructure({required this.name, required this.fields});
 
   ClassStructure.fromClassElement(ClassElement classElement)
-      : name = classElement.displayName,
-        fields = <ClassField>[] {
-    final elementInstanceFields = Map.fromEntries(classElement.fields
-        .where((e) => !e.isStatic)
-        .map((e) => MapEntry(e.displayName, e)));
+    : name = classElement.displayName,
+      fields = <ClassField>[] {
+    final elementInstanceFields = Map.fromEntries(
+      classElement.fields
+          .where((e) => !e.isStatic)
+          .map((e) => MapEntry(e.displayName, e)),
+    );
 
     for (final fieldElement in elementInstanceFields.entries) {
       final field = fieldElement.value;
@@ -33,12 +32,14 @@ final class ClassStructure {
         final annotation = annotations.first;
         final reader = ConstantReader(annotation);
 
-        final _defaultValue = reader.read('defaultValue');
-        if (!_defaultValue.isNull) defaultValue = _defaultValue.stringValue;
+        final annotatedDefaultValue = reader.read('defaultValue');
+        if (!annotatedDefaultValue.isNull) {
+          defaultValue = annotatedDefaultValue.stringValue;
+        }
 
-        final _environmentKey = reader.read('environmentKey');
-        if (!_environmentKey.isNull) {
-          environmentKey = _environmentKey.stringValue;
+        final annotatedEnvironmentKey = reader.read('environmentKey');
+        if (!annotatedEnvironmentKey.isNull) {
+          environmentKey = annotatedEnvironmentKey.stringValue;
         }
       }
 

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:env_configurable/class_structure.dart';
@@ -33,9 +34,7 @@ String generateFromEnvironmentClassStructure(ClassStructure classStructure) {
 
   // Create class:
 
-  buf.writeln(
-    'final ${ReCase(className).camelCase}Instance = $className(',
-  );
+  buf.writeln('final ${ReCase(className).camelCase}Instance = $className(');
 
   final environments = Platform.environment;
 
@@ -60,15 +59,14 @@ String generateFromEnvironmentClassStructure(ClassStructure classStructure) {
     }
 
     if (!isSupportType(fieldType)) {
-      final fieldValue = '${fieldType}' + '.fromEnvironment()';
-      buf.writeln(
-        '$fieldName: $fieldValue,',
-      );
+      final fieldValue = '$fieldType.fromEnvironment()';
+      buf.writeln('$fieldName: $fieldValue,');
     } else {
       final fieldValue = parseFieldValue(fieldType, value);
-      buf.writeln(
-        '$fieldName: ${fieldValue is String ? '"' + fieldValue + '"' : fieldValue},',
-      );
+      final encodedFieldValue = fieldValue is String
+          ? jsonEncode(fieldValue)
+          : fieldValue;
+      buf.writeln('$fieldName: $encodedFieldValue,');
     }
   }
 
