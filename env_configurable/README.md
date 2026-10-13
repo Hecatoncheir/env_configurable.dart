@@ -1,18 +1,8 @@
-Generate class with properties from environment variables.
+# env_configurable
 
+Генератор Dart-классов с конфигурацией из переменных окружения. Использует `source_gen` и `build`, обрабатывает аннотации из [env_annotation](../env_annotation/README.md). Требуется Dart 3.12 или новее, в пределах версии 3.x.
 
-## enc_annotation
-[Source code](https://github.com/Hecatoncheir/env_configurable.dart/tree/master/env_annotation)
-
-
-## env_configurable
-[Source code](https://github.com/Hecatoncheir/env_configurable.dart/tree/master/env_configurable)
-
-Требуется Dart 3.12 или новее.
-
-## Setup
-
-`pubspec.yaml`
+## Установка
 
 ```yaml
 dependencies:
@@ -22,65 +12,41 @@ dependencies:
       path: env_annotation
 
 dev_dependencies:
-  build_runner: ^2.16.0
+  build_runner: ^2.16.2
   env_configurable:
     git:
       url: https://github.com/Hecatoncheir/env_configurable.dart.git
       path: env_configurable
 ```
 
-Run `dart run build_runner build` after changing annotations or environment
-values.
+Выполните `dart pub get`, добавьте `@EnvConfigurable()` к классу, директиву `part 'имя_файла.g.dart';` и фабрику, вызывающую `_$ИмяКлассаFromEnvironment()`. Конструктор должен принимать поля как именованные параметры. Полный исходник приведён в [основном README](../README.md#использование).
 
-## Example
+## Генерация
 
-```dart
-import 'package:env_annotation/env_annotation.dart';
+В каталоге своего приложения:
 
-part 'person.g.dart';
-
-@EnvConfigurable()
-class Person {
-  @EnvKey(defaultValue: 'Test name')
-  final String firstName;
-
-  @EnvKey(environmentKey: 'SecondName')
-  final String? secondName;
-
-  int age;
-
-  bool isOk;
-
-  Person({
-    required this.firstName,
-    required this.secondName,
-    required this.age,
-    required this.isOk,
-  });
-
-  factory Person.fromEnvironment() => _$PersonFromEnvironment();
-}
-
+```sh
+env PORT=8080 DEBUG=true dart run build_runner build
 ```
 
-```dart
-part of 'person.dart';
+Генератор читает окружение текущего процесса и сохраняет значения в `.g.dart`. Для обновления значений выполните `dart run build_runner clean`, затем повторите генерацию с новым окружением.
 
-Person _$PersonFromEnvironment() {
-  final personInstance = Person(
-    firstName: "Test name",
-    secondName: "Second name",
-    age: 0,
-    isOk: true,
-  );
+Поддерживаются `String`, `int`, `double`, `bool` и их nullable-варианты. Для остальных типов вызывается `Тип.fromEnvironment()`. Правила преобразования и значений по умолчанию описаны в [таблице](../README.md#как-выбираются-значения).
 
-  return personInstance;
-}
+Файлы `.env` автоматически не читаются. Значения, включая секреты, становятся частью сгенерированного исходника и сборки.
+
+## Проверка генератора
+
+Из каталога `env_configurable`:
+
+```sh
+dart pub get
+dart analyze --fatal-infos
+dart test
 ```
 
-After change environment use `dart run` commands for rebuild:
-```bash
-export isOk=true
-dart run build_runner clean
-dart run build_runner build
-```
+Для проверки локальных пакетов вместе выполните генерацию в [example](../example/README.md).
+
+## Лицензия
+
+[MIT](LICENSE).
